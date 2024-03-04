@@ -1,0 +1,27 @@
+// This program checks if a number is prime or not
+
+set number 11
+set stop number
+set i 2
+sub stop 1
+set isprime 0
+
+equals number 1 end
+equals number 2 prime
+
+section while:
+equals i stop prime
+set remainder number
+mod remainder i
+equals remainder 0 end
+add i 1
+goto while
+
+section prime:
+set isprime 1
+goto end
+
+
+// 1 is prime, 0 is not prime
+section end:
+print isprime

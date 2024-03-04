@@ -1,0 +1,9 @@
+// This program prints the numbers 0 to 9 using a while loop
+
+set i 0
+section while:
+print i
+add i 1
+equals i 10 end while
+
+section end:

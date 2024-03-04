@@ -1,0 +1,29 @@
+// This program finds the maximum of three numbers
+
+set x 40
+set y 100
+set z 20
+set max x
+
+greater x y xz yz
+
+section xz:
+greater x z endx endz
+
+section yz:
+greater y z endy endz
+
+section endx:
+set max x
+goto end
+
+section endy:
+set max y
+goto end
+
+section endz:
+set max z
+goto end
+
+section end:
+print max
