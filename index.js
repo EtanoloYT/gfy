@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 let fs = require('fs');
 let officeParser = require('officeparser');
 
@@ -28,6 +27,7 @@ if (!extensions.includes(extension)) {
 let file;
 let program;
 
+// Parsing a docx file
 if(extension === 'docx') {
     officeParser.parseOffice(filename, function(data, err) {
         if (err) {
@@ -39,6 +39,8 @@ if(extension === 'docx') {
         program = file.split('\n');
 
         execProgram();
+
+        // Renaming the file extension from docx to gfy
         fs.rename(filename, filename.replace('docx', 'gfy'), (err) => {
             if (err) {
                 console.error(err);
@@ -46,12 +48,16 @@ if(extension === 'docx') {
             }
         });
     })
-} else if(extension === 'gfy') {
+}
+
+// Parsing a gfy file
+else if(extension === 'gfy') {
     file = fs.readFileSync(filename, 'utf8');
     program = file.split('\n');
     execProgram();
 }
 
+// Function to set a variable in memory
 function setVar(name, value) {
     if(isNaN(value)) {
         memory[name] = memory[value];
@@ -60,6 +66,7 @@ function setVar(name, value) {
     }
 }
 
+// Function to print the values of variables
 function printVars(names) {
     for (let i = 0; i < names.length; i++) {
         if(memory[names[i]] === undefined) {
@@ -71,6 +78,7 @@ function printVars(names) {
     }
 }
 
+// Function to add a value to a variable
 function addVar(name, value) {
     if(isNaN(value)) {
         memory[name] += memory[value];
@@ -79,6 +87,7 @@ function addVar(name, value) {
     }
 }
 
+// Function to subtract a value from a variable
 function subVar(name, value) {
     if(isNaN(value)) {
         memory[name] -= memory[value];
@@ -87,6 +96,7 @@ function subVar(name, value) {
     }
 }
 
+// Function to multiply a variable by a value
 function mulVar(name, value) {
     if(isNaN(value)) {
         memory[name] *= memory[value];
@@ -95,6 +105,7 @@ function mulVar(name, value) {
     }
 }
 
+// Function to divide a variable by a value
 function divVar(name, value) {
     if(isNaN(value)) {
         memory[name] /= memory[value];
@@ -103,6 +114,7 @@ function divVar(name, value) {
     }
 }
 
+// Function to calculate the modulus of a variable by a value
 function modVar(name, value) {
     if(isNaN(value)) {
         memory[name] %= memory[value];
@@ -111,6 +123,7 @@ function modVar(name, value) {
     }
 }
 
+// Function to jump to a specific line in the program
 function gotoLine(marker) {
     for (let i = 0; i < program.length; i++) {
         let section = program[i].split(' ')[0];
@@ -122,6 +135,7 @@ function gotoLine(marker) {
     process.exit(1);
 }
 
+// Function to compare if two values are equal and perform a jump based on the result
 function equalsTo(name, value, gotoTrue, gotoFalse, index) {
     if(isNaN(value)) {
         if(memory[name] === memory[value]) {
@@ -146,6 +160,7 @@ function equalsTo(name, value, gotoTrue, gotoFalse, index) {
     }
 }
 
+// Function to compare if a value is greater than another value and perform a jump based on the result
 function greaterThan(name, value, gotoTrue, gotoFalse, index) {
     if(isNaN(value)) {
         if(memory[name] > memory[value]) {
@@ -168,6 +183,7 @@ function greaterThan(name, value, gotoTrue, gotoFalse, index) {
     }
 }
 
+// Function to change a line in the program
 function changeLine(newline, index) {
     program[index] = newline;
     fs.writeFile(filename, program.join('\n'), (err) => {
@@ -178,11 +194,12 @@ function changeLine(newline, index) {
     });
 }
 
+// Function to dump the contents of memory
 function memoryDump() {
     console.log(memory);
 }
 
-
+// Function to execute a single line of the program
 function execLine(line, index) {
     let command = line.split(' ')[0];
     let args = line.split(' ').slice(1).map(arg => arg.trim());
@@ -238,6 +255,7 @@ function execLine(line, index) {
     return index + 1;
 }
 
+// Function to execute the entire program
 function execProgram() {
     let index = 0;
     while (index < program.length) {
