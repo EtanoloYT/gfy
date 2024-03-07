@@ -59,10 +59,14 @@ else if(extension === 'gfy') {
 
 // Function to set a variable in memory
 function setVar(name, value) {
-    if(isNaN(value)) {
-        memory[name] = memory[value];
+    if(value.startsWith('"') && value.endsWith('"') || value.startsWith('\'') && value.endsWith('\'')) {
+        memory[name] = value.slice(1, -1);
     } else {
-        memory[name] = parseInt(value);
+        if(isNaN(value)) {
+            memory[name] = memory[value];
+        } else {
+            memory[name] = parseInt(value);
+        }
     }
 }
 
