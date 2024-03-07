@@ -212,7 +212,7 @@ function execLine(line, index) {
 
     switch (command) {
         case 'set':
-            setVar(args[0], args[1]);
+            setVar(args[0], args.slice(1).join(' '));
             break;
         case 'print':
             printVars(args);
