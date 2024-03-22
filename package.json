@@ -11,5 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "officeparser": "^4.0.8"
-  }
+  },
+  "type": "module"
 }

@@ -1,0 +1,19 @@
+define for(x,y,callable):
+    less x y:
+        callable
+        add x 1
+        for x y
+    end
+end
+
+define while(x,callable):
+    less x 0:
+        callable
+        sub x 1
+        while x callable
+    end
+end
+
+define TODO():
+    print "TODO"
+end

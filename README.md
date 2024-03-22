@@ -46,15 +46,49 @@ GFY supports the following syntax:
 
 #### Control Flow
 
-- `goto <marker>`: Jumps to a specified marker in the script.
-- `equals <variable> <value> <gotoTrue> <gotoFalse>`: Checks if a variable equals a value and jumps accordingly.
-- `greater <variable> <value> <gotoTrue> <gotoFalse>`: Checks if a variable is greater than a value and jumps accordingly.
-- `section <marker>:`: Defines a marker in the script.
+- `equals <variable> <variable>:`: Checks if two variables are equal.
+- `greater <variable> <variable>`: Checks if the first variable is greater than the second.
+- `less <variable> <variable>`: Checks if the first variable is less than the second.
+- `Example:`
+  ```plaintext
+  set x 10
+  set y 5
+  equals x y:
+    print "x is equal to y"
+  end
+  ```
 
-#### Other
+#### Function Definitions
 
-- `change <line_number> <new_line>`: Changes a line of the script.
-- `dump`: Prints the current state of variables.
+- `define <name>(<parameters>):`: Defines a function with the given name and parameters.
+- `end`: Ends the function definition.
+- `<name> <arguments>`: Calls a function with the given name and arguments.
+- `Callables: special functions that can be called as if they were variables. They can be defined using square brackets.`
+- `Example:`
+  ```plaintext
+  define square(x):
+    mul x x
+  end
+
+  set y 5
+  square y
+  print y
+  ```
+
+#### Modules
+
+- `£import <folder>/<module>`: Imports a module.
+- `Example:`
+  ```plaintext
+  £import Modules/std
+
+  set i 0
+  set stop 10
+
+  for i stop [print i]
+  ```
+
+
 
 ### Example
 
@@ -75,5 +109,4 @@ This script sets variables `x` and `y` to 10 and 5 respectively, adds them toget
 
 GFY supports the following file extensions:
 
-- `.docx`: Microsoft Word documents (parses and executes)
 - `.gfy`: GFY script files

@@ -1,8 +1,9 @@
 // This program shows the use of the change command to change a line in the current program
 // so the execution of the program will be different each time it is run.
+// OLD
 
-set number 10
-set number2 20
+set number 30
+set number2 40
 
 greater number number2 change2 change1
 

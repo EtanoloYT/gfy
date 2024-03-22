@@ -1,4 +1,5 @@
 // This program checks if a number is prime or not
+// OLD
 
 set number 11
 set stop number
