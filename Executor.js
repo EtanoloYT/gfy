@@ -181,9 +181,7 @@ class Executor {
                 let functionSignature = task.args[0];
                 let functionName = functionSignature.split("(")[0];
                 let functionParams = functionSignature.split("(")[1].split(")")[0].split(",");
-                console.log(task.args);
                 task.args.shift();
-                console.log(task.args);
                 let functionBody = task.args;
                 memory.defineFunction(functionName, functionParams, functionBody);
                 break;

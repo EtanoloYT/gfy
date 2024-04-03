@@ -23,5 +23,3 @@ tokenizer.sanitize();
 executor.addFunctionNames(tokenizer.getTokens());
 executor.addTasks(tokenizer.getTokens());
 executor.runTasks(memory);
-//console.log(tokenizer.getTokens());
-//console.log(executor.getTasks());
