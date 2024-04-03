@@ -1,15 +1,5 @@
-define average(x,y):
-    add x y
-    div x 2
-end
+£import module/std
 
-define isEven(x):
-    mod x 2
-    equals x 0:
-        print "true"
-    end
-end
-
-define TODO():
-    print "TODO"
+define square(x):
+    mul x x
 end

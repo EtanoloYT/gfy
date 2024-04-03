@@ -1,86 +1,113 @@
 class Memory {
+
     constructor() {
-        this.memory = {};
-        this.functionList = [];
+        this.variables = {};
+        this.functions = {};
     }
 
-    getMemory() {
-        return this.memory;
+    print(name) {
+        console.log(this.variables[name].value);
     }
 
-    getFunctionList() {
-        return this.functionList;
+    getVariable(name) {
+        return this.variables[name];
     }
 
-    getFunctionNames() {
-        return this.functionNames;
+    getVariables() {
+        return this.variables;
     }
 
-    setMemory(name, value, type) {
-        if(type != undefined) {
-            this.memory[name] = {
-                type: type,
-                value: value
-            };
-            return;
-        }
-        // Cast value to its proper type "string" => type
-        switch(typeof value) {
-            case 'string':
-                if(isNaN(value)) {
-                    if(value.startsWith('"') && value.endsWith('"')) {
-                        type = 'string';
-                        value = value.slice(1, -1);
-                    } else {
-                        type = this.memory[value].type;
-                        value = this.memory[value].value;
-                    }
-                } else {
-                    type = 'number';
-                    value = parseFloat(value);
+    getFunction(name) {
+        return this.functions[name];
+    }
+
+    getFunctions() {
+        return this.functions;
+    }
+
+    equals(a, b) {
+        a = this.getVariable(a).value;
+        b = this.castType(b);
+        return a == b;
+    }
+
+    less(a, b) {
+        a = this.getVariable(a).value;
+        b = this.castType(b);
+        return a < b;
+    }
+
+    greater(a, b) {
+        a = this.getVariable(a).value;
+        b = this.castType(b);
+        return a > b;
+    }
+
+    addVariable(name, value, type) {
+        switch(type) {
+            case "int":
+                this.variables[name] = {
+                    value: parseInt(value),
+                    type: "int"
                 }
                 break;
-            case 'number':
-                type = 'number';
+            case "float":
+                this.variables[name] =  {
+                    value: parseFloat(value),
+                    type: "float"
+                }
                 break;
-            case 'boolean':
-                type = 'boolean';
+            case "string":
+                this.variables[name] = {
+                    value: value,
+                    type: "string"
+                }
                 break;
-            case 'object':
-                type = 'function';
+            case "bool":
+                this.variables[name] = {
+                    value: value === "true",
+                    type: "bool"
+                }
                 break;
             default:
-                console.error('Unknown type: ' + typeof value);
-                process.exit(1);
+                this.variables[name] = value;
         }
+    }
 
-        this.memory[name] = {
-            type: type,
-            value: value
-        };
+    autoTypeVariable(name, value) {
+        if(value === "true" || value === "false") {
+            this.addVariable(name, value, "bool");
+        } else if(!isNaN(value)){
+            if(value.includes(".")) {
+                this.addVariable(name, value, "float");
+            } else {
+                this.addVariable(name, value, "int");
+            }
+        } else {
+            this.addVariable(name, value, "string");
+        }
     }
 
     defineFunction(name, args, body) {
-        this.functionList[name] = {
+        this.functions[name] = {
             args: args,
             body: body
-        };
-    }
-
-    getVar(name) {
-        return this.memory[name];
-    }
-
-    printVars(names) {
-        for (let i = 0; i < names.length; i++) {
-            if(this.memory[names[i]] === undefined) {
-                console.error('Undefined variable: ' + names[i]);
-                process.exit(1);
-            } else {
-                console.log(this.memory[names[i]].value + ' ');
-            }
         }
     }
+
+    castType(value) {
+        if(isNaN(value)) {
+            value = this.getVariable(value).value;
+        } else {
+            if(value.includes(".")) {
+                value = parseFloat(value);
+            } else {
+                value = parseInt(value);
+            }
+        }
+        return value;
+    }
+
 }
 
 export default Memory;

@@ -1,25 +1,27 @@
-import fs from 'fs';
-import Tokenizer from './Tokenizer.js';
-import Memory from './Memory.js';
-import Executor from './Executor.js';
+import fs from "fs";
+import Memory from "./Memory.js";
+import Tokenizer from "./Tokenizer.js";
+import Executor from "./Executor.js";
+import ErrorHandler from "./ErrorHandler.js";
 
-let memory = new Memory();
-let tokenizer = new Tokenizer();
-let executor = new Executor();
+const memory = new Memory();
+const tokenizer = new Tokenizer();
+const executor = new Executor();
 
 const args = process.argv.slice(2);
-const filename = args[0];
+const fileName = args[0];
 
-if (!filename) {
-    console.error('Filename is required');
-    process.exit(1);
+if(!fileName) {
+    ErrorHandler.handleError("No file provided");
 }
 
-let file = fs.readFileSync(filename, 'utf8');
+let file = fs.readFileSync(fileName, "utf8");
 tokenizer.tokenize(file);
+tokenizer.findImports();
 tokenizer.sanitize();
-tokenizer.importModules();
-tokenizer.groupFunctions(executor);
 
+executor.addFunctionNames(tokenizer.getTokens());
 executor.addTasks(tokenizer.getTokens());
-executor.executeTasks(memory);
+executor.runTasks(memory);
+//console.log(tokenizer.getTokens());
+//console.log(executor.getTasks());

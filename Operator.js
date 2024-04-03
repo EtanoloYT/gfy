@@ -1,77 +1,47 @@
 class Operator {
 
-    static checkType(name, value, memory) {
-        if(!isNaN(name)) {
-            console.error('Variable name cannot be a number');
-            return false;
+    static castType(value, memory) {
+        if(isNaN(value)) {
+            value = memory.getVariable(value).value;
         } else {
-            if(!isNaN(value)) {
-                return true;
+            if(value.includes(".")) {
+                value = parseFloat(value);
             } else {
-                if(memory.memory[name].type == 'string' || memory.memory[value].type == 'string') {
-                    console.error('Cannot perform operations on strings');
-                    return false;
-                }
-                if(memory.memory[name].type == memory.memory[value].type || memory.memory[name].type == 'variable' || memory.memory[value].type == 'variable') {
-                    return true;
-                } else {
-                    console.error('Type mismatch: ' + memory.memory[name].type + ' and ' + memory.memory[value].type);
-                    return false;
-                }
+                value = parseInt(value);
             }
         }
+        return value;
     }
 
-    static addVar(name, value, memory) {
-        if(this.checkType(name, value, memory)) {
-            if(isNaN(value)) {
-                memory.setMemory(name, memory.memory[name].value + memory.memory[value].value);
-            } else {
-                memory.setMemory(name, memory.memory[name].value + parseFloat(value));
-            }
-        }
+    static add(a, b, memory) {
+        a = memory.getVariable(a).value;
+        b = this.castType(b, memory);
+        return (a + b).toString();
     }
 
-    static subVar(name, value, memory) {
-        if(this.checkType(name, value, memory)) {
-            if(isNaN(value)) {
-                memory.setMemory(name, memory.memory[name].value - memory.memory[value].value);
-            } else {
-                memory.setMemory(name, memory.memory[name].value - parseFloat(value));
-            }
-        }
+    static sub(a, b, memory) {
+        a = memory.getVariable(a).value;
+        b = this.castType(b, memory);
+        return (a - b).toString();
     }
 
-    static mulVar(name, value, memory) {
-        if(this.checkType(name, value, memory)) {
-            if(isNaN(value)) {
-                memory.setMemory(name, memory.memory[name].value * memory.memory[value].value);
-            } else {
-                memory.setMemory(name, memory.memory[name].value * parseFloat(value));
-            }
-        }
+    static mul(a, b, memory) {
+        a = memory.getVariable(a).value;
+        b = this.castType(b, memory);
+        return (a * b).toString();
     }
 
-    static divVar(name, value, memory) {
-        if(this.checkType(name, value, memory)) {
-            if(isNaN(value)) {
-                memory.setMemory(name, memory.memory[name].value / memory.memory[value].value);
-            } else {
-                memory.setMemory(name, memory.memory[name].value / parseFloat(value));
-            }
-        }
+    static div(a, b, memory) {
+        a = memory.getVariable(a).value;
+        b = this.castType(b, memory);
+        return (a / b).toString();
     }
 
-    static modVar(name, value, memory) {
-        if(this.checkType(name, value, memory)) {
-            if(isNaN(value)) {
-                memory.setMemory(name, memory.memory[name].value % memory.memory[value].value);
-            } else {
-                memory.setMemory(name, memory.memory[name].value % parseFloat(value));
-            }
-        }
+    static mod(a, b, memory) {
+        a = memory.getVariable(a).value;
+        b = this.castType(b, memory);
+        return (a % b).toString();
     }
-
 }
 
 export default Operator;
