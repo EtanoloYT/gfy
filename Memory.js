@@ -1,3 +1,5 @@
+import ErrorHandler from "./ErrorHandler.js";
+
 class Memory {
 
     constructor() {
@@ -6,7 +8,15 @@ class Memory {
     }
 
     print(name) {
-        console.log(this.variables[name].value);
+        try {
+            console.log(this.variables[name].value);
+        } catch(err) {
+            if(name.startsWith('"') && name.endsWith('"')) {
+                console.log(name.slice(1, name.length - 1));
+            } else {
+                ErrorHandler.handleError("Variable " + name + " not found");
+            }
+        }
     }
 
     getVariable(name) {

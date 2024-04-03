@@ -7,3 +7,21 @@ define for(i,stop,callable):
         for i stop callable
     end
 end
+
+define >(a,b,callable):
+    greater a b
+        callable
+    end
+end
+
+define <(a,b,callable):
+    less a b
+        callable
+    end
+end
+
+define =(a,b,callable):
+    equals a b
+        callable
+    end
+end

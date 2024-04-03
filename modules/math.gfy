@@ -1,5 +1,36 @@
-£import module/std
+£import modules/std
 
 define square(x):
     mul x x
+end
+
+define cube(x):
+    set __temp x
+    mul x __temp
+    mul x __temp
+end
+
+define add3(x,y,z):
+    add x y
+    add x z
+end
+
+define sub3(x,y,z):
+    sub x y
+    sub x z
+end
+
+define mul3(x,y,z):
+    mul x y
+    mul x z
+end
+
+define div3(x,y,z):
+    div x y
+    div x z
+end
+
+define mod3(x,y,z):
+    mod x y
+    mod x z
 end
