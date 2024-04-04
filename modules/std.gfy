@@ -1,4 +1,5 @@
-set __ZERO 0
+set true true
+set false false
 
 define for(i,stop,callable):
     less i stop

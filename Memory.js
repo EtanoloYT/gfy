@@ -94,7 +94,9 @@ class Memory {
                 this.addVariable(name, value, "int");
             }
         } else {
-            this.addVariable(name, value, "string");
+            if(value.startsWith('"') && value.endsWith('"')) {
+                this.addVariable(name, value, "string");
+            }
         }
     }
 
@@ -107,7 +109,11 @@ class Memory {
 
     castType(value) {
         if(isNaN(value)) {
-            value = this.getVariable(value).value;
+            try {
+                value = this.getVariable(value).value
+            } catch(err) {
+                ErrorHandler.handleError("Cannot find variable " + value)
+            }
         } else {
             if(value.includes(".")) {
                 value = parseFloat(value);
