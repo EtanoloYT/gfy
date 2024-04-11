@@ -7,15 +7,28 @@ class Tokenizer {
         this.tokens = [];
     }
 
+    /**
+     * Returns the tokens
+     * 
+     * @returns {Array} tokens
+     */
     getTokens() {
         return this.tokens;
     }
 
+    /**
+     * Tokenizes the code by splitting it by newlines, tabs, and spaces
+     * 
+     * @param {string} code 
+     */
     tokenize(code) {
         // Split code by newlines, tabs, and spaces
         this.tokens = code.split(/\s+/);
     }
 
+    /**
+     * Finds all import statements and imports the modules
+     */
     findImports() {
         // Find all import statements
         this.tokens.forEach((token, index) => {
@@ -25,6 +38,12 @@ class Tokenizer {
         });
     }
 
+    /**
+     * Imports a module by replacing the import statement with the module code
+     * 
+     * @param {number} index 
+     * @param {string} module 
+     */
     importModule(index, module) {
         if(!module) {
             ErrorHandler.handleError("No module provided for import statement");
@@ -47,8 +66,10 @@ class Tokenizer {
         this.findImports();
     }
 
+    /**
+     * Removes empty tokens
+     */
     sanitize() {
-        // Remove all empty tokens
         this.tokens = this.tokens.filter(token => token !== "");
     }
 

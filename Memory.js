@@ -7,6 +7,11 @@ class Memory {
         this.functions = {};
     }
 
+    /**
+     * Prints the value of a variable or a string
+     * 
+     * @param {string} name 
+     */
     print(name) {
         try {
             console.log(this.variables[name].value);
@@ -19,40 +24,83 @@ class Memory {
         }
     }
 
+    /**
+     * 
+     * @param {string} name 
+     * @returns 
+     */
     getVariable(name) {
         return this.variables[name];
     }
 
+    /**
+     * 
+     * @returns variables
+     */
     getVariables() {
         return this.variables;
     }
 
+    /**
+     * 
+     * @param {string} name 
+     * @returns function definition
+     */
     getFunction(name) {
         return this.functions[name];
     }
 
+    /**
+     * 
+     * @returns functions
+     */
     getFunctions() {
         return this.functions;
     }
 
+    /**
+     * 
+     * @param {number} a 
+     * @param {number} b 
+     * @returns {boolean}
+     */
     equals(a, b) {
         a = this.getVariable(a).value;
         b = this.castType(b);
         return a == b;
     }
 
+    /**
+     * 
+     * @param {number} a 
+     * @param {number} b 
+     * @returns {boolean}
+     */
     less(a, b) {
         a = this.getVariable(a).value;
         b = this.castType(b);
         return a < b;
     }
 
+    /**
+     * 
+     * @param {number} a 
+     * @param {number} b 
+     * @returns {boolean}
+     */
     greater(a, b) {
         a = this.getVariable(a).value;
         b = this.castType(b);
         return a > b;
     }
 
+    /**
+     * Adds a variable to the memory
+     * 
+     * @param {string} name 
+     * @param {any} value 
+     * @param {string} type 
+     */
     addVariable(name, value, type) {
         switch(type) {
             case "int":
@@ -84,6 +132,12 @@ class Memory {
         }
     }
 
+    /**
+     * Automatically types a variable and adds it to the memory
+     * 
+     * @param {string} name 
+     * @param {any} value 
+     */
     autoTypeVariable(name, value) {
         if(value === "true" || value === "false") {
             this.addVariable(name, value, "bool");
@@ -100,6 +154,13 @@ class Memory {
         }
     }
 
+    /**
+     * Defines a function in the memory
+     * 
+     * @param {string} name 
+     * @param {Array} args 
+     * @param {Array} body 
+     */
     defineFunction(name, args, body) {
         this.functions[name] = {
             args: args,
@@ -107,6 +168,11 @@ class Memory {
         }
     }
 
+    /**
+     * 
+     * @param {any} value 
+     * @returns {any}
+     */
     castType(value) {
         if(isNaN(value)) {
             try {

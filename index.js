@@ -15,11 +15,14 @@ if(!fileName) {
     ErrorHandler.handleError("No file provided");
 }
 
+// Read the file and tokenize it
 let file = fs.readFileSync(fileName, "utf8");
 tokenizer.tokenize(file);
 tokenizer.findImports();
 tokenizer.sanitize();
 
+// Add functions and tasks to the executor
 executor.addFunctionNames(tokenizer.getTokens());
 executor.addTasks(tokenizer.getTokens());
+// Run the tasks
 executor.runTasks(memory);
